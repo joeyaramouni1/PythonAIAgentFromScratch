@@ -2,6 +2,8 @@ from langchain_community.tools import WikipediaQueryRun, DuckDuckGoSearchRun
 from langchain_community.utilities import WikipediaAPIWrapper
 from langchain.tools import Tool
 from datetime import datetime
+import pyttsx3
+
 
 def save_to_txt(data: str, filename: str = "research_output.txt"):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -11,6 +13,14 @@ def save_to_txt(data: str, filename: str = "research_output.txt"):
         f.write(formatted_text)
     
     return f"Data successfully saved to {filename}"
+
+def speak_text(data: str) -> str:
+    """Speak the given text aloud using TTS."""
+    engine = pyttsx3.init()
+    engine.say(data)
+    engine.runAndWait()
+    return "Spoken out loud using TTS."
+
 
 save_tool = Tool(
     name="save_text_to_file",
@@ -28,3 +38,8 @@ search_tool = Tool(
 api_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_chars_max=100)
 wiki_tool = WikipediaQueryRun(api_wrapper=api_wrapper)
 
+speak_tool = Tool(
+    name="speak_text_aloud",
+    func=speak_text,
+    description="Reads the research result aloud using text-to-speech.",
+)
