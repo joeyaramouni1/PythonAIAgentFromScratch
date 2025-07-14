@@ -9,7 +9,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-def save_to_txt(data: str, filename: str = "research_output.txt"):
+def save_to_txt(data: str, filename: str = "output/research_output.txt"):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     formatted_text = f"--- Research Output ---\nTimestamp: {timestamp}\n\n{data}\n\n"
 
@@ -25,7 +25,7 @@ def speak_text(data: str) -> str:
     engine.runAndWait()
     return "Spoken out loud using TTS."
 
-def draw_image(summary: str, filename: str = "generated_image.png") -> str:
+def draw_image(summary: str, filename: str = "output/generated_image.png") -> str:
     """
     Uses OpenAI to generate an image representing the summary of the topic.
     """
